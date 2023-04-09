@@ -3,8 +3,8 @@ import QtQuick 2.15
 Rectangle {
     id: mainScreen
     anchors.fill: parent
-//    color: "#f6f6f6"
-    color: "black"
+    color: "#f6f6f6"
+
 
 
 
@@ -74,23 +74,15 @@ Rectangle {
         height: 288
         radius: 30
         color: "#bcbcbc"
-
-
-
-    }
-
-
-
-
-        Image {
-            source:"Panels/Images/thermometer-b.png"
-
-            anchors.centerIn: parent
-//            width: 28.1
-//            height: 95
+        Loader {
+            id: mainareaLoader
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            source: "Panels/connectionPanel.qml"
         }
 
-
+    }
 
 
 }
