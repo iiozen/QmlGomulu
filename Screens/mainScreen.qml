@@ -4,16 +4,6 @@ Rectangle {
     id: mainScreen
     anchors.fill: parent
     color: "#f6f6f6"
-
-
-
-
-
-
-
-
-
-
     Rectangle {
         id: lefttopInfo
         anchors.top: parent.top
@@ -21,19 +11,19 @@ Rectangle {
         anchors.leftMargin: 10
         anchors.topMargin: 5
         Text {
-            text: "BAĞLANTI AYARLARI"
+            text:{
+                if (screenHandler.screen === 0 ) return "BAĞLANTI AYARLARI"
+                else if (screenHandler.screen === 1) return "ANA MENÜ"
+                else if (screenHandler.screen === 2) return "LED KONTROL"
+            }
             font.family: "Aileron Regular"
             font.pointSize: 12
             color: "#00bf63"
         }
-
     }
-
-
-
     Text {
         id: disconnectText
-        visible: true
+        visible: screenHandler.screen === 1
         text: "BAĞLANTIYI KES"
         color: "#ff3131"
         font.pointSize: 12
@@ -41,11 +31,14 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.leftMargin: 10
         anchors.bottomMargin: 5
+        MouseArea {
+            anchors.fill: parent
+            onClicked: screenHandler.resetAll()
+        }
     }
-
     Image {
         id: backpageArrow
-        visible: true
+        visible: screenHandler.screen === 2
         source: "Panels/Images/left-arrow.png"
         width: 52.4
         height: (implicitHeight/implicitWidth) * 52.4
@@ -54,9 +47,11 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.leftMargin: 43.6
         anchors.bottomMargin: 30
+        MouseArea {
+            anchors.fill: parent
+            onClicked: screenHandler.setScreen( 1 )
+        }
     }
-
-
     Text {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -66,7 +61,6 @@ Rectangle {
         text: "<b>IŞINER İSMAİL ÖZEN</b>"
 
     }
-
     Rectangle {
         id: mainfocusArea
         anchors.centerIn: parent
@@ -79,10 +73,17 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            source: "Panels/connectionPanel.qml"
+            source: {
+                if ( screenHandler.screen === 0 ) {
+                    return "Panels/connectionPanel.qml"
+                }
+                else if ( screenHandler.screen === 1 ) {
+                    return "Panels/mainMenuPanel.qml"
+                }
+                else if ( screenHandler.screen === 2) {
+                    return "Panels/ledKontrolInnerPanel.qml"
+                }
+            }
         }
-
     }
-
-
 }

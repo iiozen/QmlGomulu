@@ -10,6 +10,9 @@ find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
 
 qt_add_executable(appGomuluProje
     main.cpp
+    Screens/classes/screenhandler.cpp
+    Screens/classes/screenhandler.h
+
 )
 
 qt_add_qml_module(appGomuluProje
@@ -19,6 +22,10 @@ qt_add_qml_module(appGomuluProje
         main.qml
         Screens/mainScreen.qml
         Screens/Panels/connectionPanel.qml
+        Screens/Panels/mainMenuPanel.qml
+        Screens/Panels/motorDial.qml
+        Screens/Panels/tempInnerPanel.qml
+        Screens/Panels/ledKontrolInnerPanel.qml
 
 
     RESOURCES
