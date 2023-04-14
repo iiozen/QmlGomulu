@@ -14,10 +14,10 @@ ScreenHandler::ScreenHandler(QObject *parent)
     , m_tempscreen( false )
     , m_uart1_port( "COM2" )
     , m_uart1_baudrate( 115200 )
-    , m_uart1_timeout ( 1 )
+    , m_uart1_timeout ( 100 )
     , m_uart2_port( "COM3")
     , m_uart2_baudrate( 115200 )
-    , m_uart2_timeout( 1 )
+    , m_uart2_timeout( 1000 )
 {
 
 }

@@ -38,7 +38,7 @@ Item {
         MouseArea {
             id: ledKontrolButon
             anchors.fill: parent
-            onClicked: screenHandler.setScreen( 2 )
+            onClicked: screenHandler.setScreen( 3 )
         }
     }
     Rectangle {

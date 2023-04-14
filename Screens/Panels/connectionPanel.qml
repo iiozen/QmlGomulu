@@ -42,10 +42,34 @@ Rectangle {
                     }
                     TextInput {
                         id: uart1PortInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart1_port
-                        onTextChanged: screenHandler.setUart1_port( text )
+                        onTextChanged: {
+                            if(text === "" || text == "-") {
+                                uart1PortBorder.border.color= "red"
+                                nsuc= true
+                            }
+                            else {
+                                uart1PortBorder.border.color= "black"
+                                nsuc= false
+                            }
+                            screenHandler.setUart1_port( text )
+                        }
+                        onFocusChanged: {
+                            if(text === "" || text === "-") {
+                                uart1PortBorder.border.color= "red"
+                                uart1PortInput.text = "-"
+                                nsuc= true
+                            }
+                            else {
+                                uart1PortBorder.border.color= "black"
+                                nsuc= false
+                            }
+                            screenHandler.setUart1_port( text )
+                        }
                         Rectangle {
+                            id: uart1PortBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -66,10 +90,23 @@ Rectangle {
                     }
                     TextInput {
                         id: uart1BaudInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart1_baudrate
-                        onTextChanged: screenHandler.setUart1_baudrate ( text )
+                        onTextChanged: {
+                            if(isNaN(text)) {
+                                uart1BaudBorder.border.color= "red"
+                                nsuc= true
+                                return
+                            }
+                            else {
+                                uart1BaudBorder.border.color= "black"
+                                nsuc= false
+                            }
+                            screenHandler.setUart1_baudrate ( text )
+                        }
                         Rectangle {
+                            id: uart1BaudBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -90,10 +127,21 @@ Rectangle {
                     }
                     TextInput {
                         id: uart1TimeoutInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart1_timeout
-                        onTextChanged: screenHandler.setUart1_timeout( text )
+                        onTextChanged: {
+                            if(isNaN(text)) {
+                                uart1TimeoutBorder.border.color= "red"
+                                nsuc= true
+                                return
+                            }
+                            uart1TimeoutBorder.border.color= "black"
+                            nsuc= false
+                            screenHandler.setUart1_timeout( text )
+                        }
                         Rectangle {
+                            id: uart1TimeoutBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -139,11 +187,35 @@ Rectangle {
                     }
                     TextInput {
                         id: uart2PortInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart2_port
-                        onTextChanged: screenHandler.setUart2_port( text )
-                        selectByMouse: true
+                        onTextChanged: {
+                            if(text === "" || text == "-") {
+                                uart2PortBorder.border.color= "red"
+                                nsuc= true
+                            }
+                            else {
+                                uart2PortBorder.border.color= "black"
+                                nsuc= false
+                            }
+                            screenHandler.setUart2_port( text )
+                        }
+                        onFocusChanged: {
+                            if(text === "" || text === "-") {
+                                uart2PortBorder.border.color= "red"
+                                uart2PortInput.text = "-"
+                                nsuc= true
+                            }
+                            else {
+                                uart2PortBorder.border.color= "black"
+                                nsuc= false
+                            }
+                            screenHandler.setUart2_port( text )
+                        }
+
                         Rectangle {
+                            id: uart2PortBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -164,10 +236,21 @@ Rectangle {
                     }
                     TextInput {
                         id: uart2BaudInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart2_baudrate
-                        onTextChanged: screenHandler.setUart2_baudrate( text )                        
+                        onTextChanged: {
+                            if(isNaN(text)) {
+                                uart2BaudBorder.border.color= "red"
+                                nsuc= true
+                                return
+                            }
+                            uart2BaudBorder.border.color= "black"
+                            nsuc= false
+                            screenHandler.setUart2_baudrate( text )
+                        }
                         Rectangle {
+                            id: uart2BaudBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -188,10 +271,21 @@ Rectangle {
                     }
                     TextInput {
                         id: uart2TimeoutInput
+                        property bool nsuc: false
                         font.pointSize: 12
                         text: screenHandler.uart2_timeout
-                        onTextChanged: screenHandler.setUart2_timeout( text )
+                        onTextChanged: {
+                            if(isNaN(text)) {
+                                uart2TimeoutBorder.border.color= "red"
+                                nsuc= true
+                                return
+                            }
+                            uart2TimeoutBorder.border.color= "black"
+                            nsuc= false
+                            screenHandler.setUart2_timeout( text )
+                        }
                         Rectangle {
+                            id: uart2TimeoutBorder
                             anchors.fill: parent
                             anchors.rightMargin: -3
                             anchors.leftMargin: -3
@@ -210,6 +304,14 @@ Rectangle {
 
     Rectangle {
         id: baglanButon
+        property bool clickable: (
+                                    uart1BaudInput.nsuc ||
+                                    uart2BaudInput.nsuc ||
+                                    uart1PortInput.nsuc ||
+                                    uart2PortInput.nsuc ||
+                                    uart1TimeoutInput.nsuc ||
+                                    uart2TimeoutInput.nsuc
+                                    ) ? false : true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: uartInfoArea.bottom
         anchors.topMargin: 180.5
@@ -219,19 +321,20 @@ Rectangle {
         color: "#00a473"
         border.color: "#00a473"
         border.width: 0
+        opacity: clickable ? 1 : 0.3
+        visible: screenHandler.screen === 0
         Text {
             id: baglanButonText
             anchors.centerIn: parent
             text: "BAĞLAN"
             color:"white"
             font.pointSize: 12
-
         }
-
-        MouseArea {            
+        MouseArea {
             anchors.fill: parent
-            hoverEnabled: true
+            hoverEnabled: baglanButon.clickable
             onEntered: {
+                if(!baglanButon.clickable) return
                 baglanButon.color= "white"
                 baglanButonText.color = "#00a473"
                 baglanButon.border.width= 2
@@ -242,11 +345,16 @@ Rectangle {
                 baglanButon.border.width= 0
             }
             onClicked: {
-                baglanBusy.visible = true
-                baglanButon.visible = false
-                baglanBusy.running = true
+                // Clickable
+                if (!baglanButon.clickable) return
 
-                screenHandler.setScreen( 1 )
+                // Baglanti Oncesi Kontroller
+
+                if ( uart2PortInput.text === "" ) {
+                    screenHandler.setUart2_port( "-" )
+                    success= false
+                }
+                screenHandler.setScreen( 2 )
             }
         }
 
@@ -259,7 +367,7 @@ Rectangle {
         anchors.topMargin: 154.7
         width: 95
         height: 95
-        visible: false
+        visible: screenHandler.screen === 1
         running: false
     }
 

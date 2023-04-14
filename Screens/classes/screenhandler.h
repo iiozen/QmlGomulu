@@ -125,6 +125,7 @@ signals:
     void uart2_portChanged();
     void uart2_baudrateChanged();
     void uart2_timeoutChanged();
+
 private:
     int m_screen;
     bool m_led0;
