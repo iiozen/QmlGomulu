@@ -18,6 +18,9 @@ ScreenHandler::ScreenHandler(QObject *parent)
     , m_uart2_port( "COM3")
     , m_uart2_baudrate( 115200 )
     , m_uart2_timeout( 1000 )
+    , m_hepsiButon ( false )
+    , m_siraliButon ( false )
+    , m_motortakipscreen( false )
 {
 
 }
@@ -46,6 +49,11 @@ void ScreenHandler::setLed0(bool newLed0)
     if (m_led0 == newLed0)
         return;
     m_led0 = newLed0;
+    std::string veri;
+    if(m_led0) veri = LED_YAK LED0;
+    else veri = LED_SONDUR LED0;
+    uart1->veriGonder(veri.data());
+
     emit led0Changed();
 }
 
@@ -59,6 +67,10 @@ void ScreenHandler::setLed1(bool newLed1)
     if (m_led1 == newLed1)
         return;
     m_led1 = newLed1;
+    std::string veri;
+    if(m_led1) veri = LED_YAK LED1;
+    else veri = LED_SONDUR LED1;
+    uart1->veriGonder(veri.data());
     emit led1Changed();
 }
 
@@ -72,6 +84,10 @@ void ScreenHandler::setLed2(bool newLed2)
     if (m_led2 == newLed2)
         return;
     m_led2 = newLed2;
+    std::string veri;
+    if(m_led2) veri = LED_YAK LED2;
+    else veri = LED_SONDUR LED2;
+    uart1->veriGonder(veri.data());
     emit led2Changed();
 }
 
@@ -86,6 +102,10 @@ void ScreenHandler::setLed3(bool newLed3)
     if (m_led3 == newLed3)
         return;
     m_led3 = newLed3;
+    std::string veri;
+    if(m_led3) veri = LED_YAK LED3;
+    else veri = LED_SONDUR LED3;
+    uart1->veriGonder(veri.data());
     emit led3Changed();
 }
 
@@ -99,6 +119,10 @@ void ScreenHandler::setLed4(bool newLed4)
     if (m_led4 == newLed4)
         return;
     m_led4 = newLed4;
+    std::string veri;
+    if(m_led4) veri = LED_YAK LED4;
+    else veri = LED_SONDUR LED4;
+    uart1->veriGonder(veri.data());
     emit led4Changed();
 }
 
@@ -112,6 +136,10 @@ void ScreenHandler::setLed5(bool newLed5)
     if (m_led5 == newLed5)
         return;
     m_led5 = newLed5;
+    std::string veri;
+    if(m_led5) veri = LED_YAK LED5;
+    else veri = LED_SONDUR LED5;
+    uart1->veriGonder(veri.data());
     emit led5Changed();
 }
 
@@ -125,6 +153,10 @@ void ScreenHandler::setLed6(bool newLed6)
     if (m_led6 == newLed6)
         return;
     m_led6 = newLed6;
+    std::string veri;
+    if(m_led6) veri = LED_YAK LED6;
+    else veri = LED_SONDUR LED6;
+    uart1->veriGonder(veri.data());
     emit led6Changed();
 }
 
@@ -138,6 +170,10 @@ void ScreenHandler::setLed7(bool newLed7)
     if (m_led7 == newLed7)
         return;
     m_led7 = newLed7;
+    std::string veri;
+    if(m_led7) veri = LED_YAK LED7;
+    else veri = LED_SONDUR LED7;
+    uart1->veriGonder(veri.data());
     emit led7Changed();
 }
 
@@ -151,6 +187,10 @@ void ScreenHandler::setLed8(bool newLed8)
     if (m_led8 == newLed8)
         return;
     m_led8 = newLed8;
+    std::string veri;
+    if(m_led8) veri = LED_YAK LED8;
+    else veri = LED_SONDUR LED8;
+    uart1->veriGonder(veri.data());
     emit led8Changed();
 }
 
@@ -164,6 +204,10 @@ void ScreenHandler::setLed9(bool newLed9)
     if (m_led9 == newLed9)
         return;
     m_led9 = newLed9;
+    std::string veri;
+    if(m_led9) veri = LED_YAK LED9;
+    else veri = LED_SONDUR LED9;
+    uart1->veriGonder(veri.data());
     emit led9Changed();
 }
 
@@ -177,6 +221,10 @@ void ScreenHandler::setLed10(bool newLed10)
     if (m_led10 == newLed10)
         return;
     m_led10 = newLed10;
+    std::string veri;
+    if(m_led10) veri = LED_YAK LED10;
+    else veri = LED_SONDUR LED10;
+    uart1->veriGonder(veri.data());
     emit led10Changed();
 }
 
@@ -190,6 +238,10 @@ void ScreenHandler::setLed11(bool newLed11)
     if (m_led11 == newLed11)
         return;
     m_led11 = newLed11;
+    std::string veri;
+    if(m_led11) veri = LED_YAK LED11;
+    else veri = LED_SONDUR LED11;
+    uart1->veriGonder(veri.data());
     emit led11Changed();
 }
 
@@ -203,6 +255,10 @@ void ScreenHandler::setLed12(bool newLed12)
     if (m_led12 == newLed12)
         return;
     m_led12 = newLed12;
+    std::string veri;
+    if(m_led12) veri = LED_YAK LED12;
+    else veri = LED_SONDUR LED12;
+    uart1->veriGonder(veri.data());
     emit led12Changed();
 }
 
@@ -216,6 +272,10 @@ void ScreenHandler::setLed13(bool newLed13)
     if (m_led13 == newLed13)
         return;
     m_led13 = newLed13;
+    std::string veri;
+    if(m_led13) veri = LED_YAK LED13;
+    else veri = LED_SONDUR LED13;
+    uart1->veriGonder(veri.data());
     emit led13Changed();
 }
 
@@ -229,6 +289,10 @@ void ScreenHandler::setLed14(bool newLed14)
     if (m_led14 == newLed14)
         return;
     m_led14 = newLed14;
+    std::string veri;
+    if(m_led14) veri = LED_YAK LED14;
+    else veri = LED_SONDUR LED14;
+    uart1->veriGonder(veri.data());
     emit led14Changed();
 }
 
@@ -267,28 +331,13 @@ void ScreenHandler::setLed15(bool newLed15)
     if (m_led15 == newLed15)
         return;
     m_led15 = newLed15;
+    std::string veri;
+    if(m_led15) veri = LED_YAK LED15;
+    else veri = LED_SONDUR LED15;
+    uart1->veriGonder(veri.data());
     emit led15Changed();
 }
 
-void ScreenHandler::hepsiToggle()
-{
-    setLed0(!led0());
-    setLed1(!led1());
-    setLed2(!led2());
-    setLed3(!led3());
-    setLed4(!led4());
-    setLed5(!led5());
-    setLed6(!led6());
-    setLed7(!led7());
-    setLed8(!led8());
-    setLed9(!led9());
-    setLed10(!led10());
-    setLed11(!led11());
-    setLed12(!led12());
-    setLed13(!led13());
-    setLed14(!led14());
-    setLed15(!led15());
-}
 
 int ScreenHandler::leddelay() const
 {
@@ -300,19 +349,31 @@ void ScreenHandler::setLeddelay(int newLeddelay)
     if (m_leddelay == newLeddelay)
         return;
     m_leddelay = newLeddelay;
+    std::string veri = LED_DELAY;
+    if (m_leddelay < 1000) veri += "0" + std::to_string(m_leddelay);
+    else veri += std::to_string(m_leddelay);
+    uart1->veriGonder(veri.data());
+
     emit leddelayChanged();
 }
 
-float ScreenHandler::motorhiz() const
+int ScreenHandler::motorhiz() const
 {
     return m_motorhiz;
 }
 
-void ScreenHandler::setMotorhiz(float newMotorhiz)
+void ScreenHandler::setMotorhiz(int newMotorhiz)
 {
     if (m_motorhiz == newMotorhiz)
         return;
     m_motorhiz = newMotorhiz;
+    std::string veri = MOTOR_SUR;
+    if( m_motorhiz < 10 )   veri += "000";
+    else if ( m_motorhiz < 100 ) veri += "00";
+    else if ( m_motorhiz < 1000 ) veri += "0";
+    veri += std::to_string(m_motorhiz);
+    uart1->veriGonder(veri.data());
+
     emit motorhizChanged();
 }
 
@@ -339,6 +400,12 @@ void ScreenHandler::setTempscreen(bool newTempscreen)
     if (m_tempscreen == newTempscreen)
         return;
     m_tempscreen = newTempscreen;
+    std::string veri;
+    if ( m_tempscreen ) veri = SICAKLIK_OKU;
+    else veri = SICAKLIK_DUR;
+    veri += "0000";
+    uart1->veriGonder(veri.data());
+
     emit tempscreenChanged();
 }
 
@@ -432,4 +499,97 @@ void ScreenHandler::setUart2_timeout(int newUart2_timeout)
         return;
     m_uart2_timeout = newUart2_timeout;
     emit uart2_timeoutChanged();
+}
+
+void ScreenHandler::baglanButon()
+{
+    uart1 = new UartConnection(uart1_port(),uart1_baudrate(),uart1_timeout());
+    uart2 = new UartConnection(uart2_port(),uart2_baudrate(),uart2_timeout());
+    setScreen( 2 );
+}
+
+bool ScreenHandler::hepsiButon() const
+{
+    return m_hepsiButon;
+}
+
+void ScreenHandler::setHepsiButon(bool newHepsiButon)
+{
+    if (m_hepsiButon == newHepsiButon)
+        return;
+    m_hepsiButon = newHepsiButon;
+    std::string veri;
+    if ( m_hepsiButon ) veri = LED_YAK HEPSI;
+    else veri = LED_SONDUR HEPSI;
+    uart1->veriGonder(veri.data());
+    m_led0 = m_hepsiButon;
+    emit led0Changed();
+    m_led1 = m_hepsiButon;
+    emit led1Changed();
+    m_led2 = m_hepsiButon;
+    emit led2Changed();
+    m_led3 = m_hepsiButon;
+    emit led3Changed();
+    m_led4 = m_hepsiButon;
+    emit led4Changed();
+    m_led5 = m_hepsiButon;
+    emit led5Changed();
+    m_led6 = m_hepsiButon;
+    emit led6Changed();
+    m_led7 = m_hepsiButon;
+    emit led7Changed();
+    m_led8 = m_hepsiButon;
+    emit led8Changed();
+    m_led9 = m_hepsiButon;
+    emit led9Changed();
+    m_led10 = m_hepsiButon;
+    emit led10Changed();
+    m_led11 = m_hepsiButon;
+    emit led11Changed();
+    m_led12 = m_hepsiButon;
+    emit led12Changed();
+    m_led13 = m_hepsiButon;
+    emit led13Changed();
+    m_led14 = m_hepsiButon;
+    emit led14Changed();
+    m_led15 = m_hepsiButon;
+    emit led15Changed();
+    emit hepsiButonChanged();
+}
+
+bool ScreenHandler::siraliButon() const
+{
+    return m_siraliButon;
+}
+
+void ScreenHandler::setSiraliButon(bool newSiraliButon)
+{
+    if (m_siraliButon == newSiraliButon)
+        return;
+    m_siraliButon = newSiraliButon;
+    std::string veri;
+    if ( m_siraliButon ) veri = LED_YAK SIRALI;
+    else veri = LED_SONDUR SIRALI;
+    uart1->veriGonder(veri.data());
+
+    emit siraliButonChanged();
+}
+
+bool ScreenHandler::motortakipscreen() const
+{
+    return m_motortakipscreen;
+}
+
+void ScreenHandler::setMotortakipscreen(bool newMotortakipscreen)
+{
+    if (m_motortakipscreen == newMotortakipscreen)
+        return;
+    m_motortakipscreen = newMotortakipscreen;
+    std::string veri;
+    if ( m_motortakipscreen ) veri =  ADC_OKU;
+    else veri = ADC_DUR;
+    veri += "0000";
+    uart1->veriGonder(veri.data());
+
+    emit motortakipscreenChanged();
 }

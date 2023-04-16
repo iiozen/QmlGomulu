@@ -12,7 +12,9 @@ qt_add_executable(appGomuluProje
     main.cpp
     Screens/classes/screenhandler.cpp
     Screens/classes/screenhandler.h
-
+    Screens/classes/uartconnection.cpp
+    Screens/classes/uartconnection.h
+    Screens/classes/degiskenler.h
 )
 
 qt_add_qml_module(appGomuluProje
@@ -26,6 +28,7 @@ qt_add_qml_module(appGomuluProje
         Screens/Panels/motorDial.qml
         Screens/Panels/tempInnerPanel.qml
         Screens/Panels/ledKontrolInnerPanel.qml
+        Screens/Panels/motortakip.qml
 
 
     RESOURCES

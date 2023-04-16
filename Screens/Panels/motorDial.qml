@@ -19,11 +19,11 @@ Rectangle {
         anchors.centerIn: parent
         value: screenHandler.motorhiz
         from: 0
-        stepSize: 0.1
-        to: 100
+        stepSize: 1
+        to: 4095
         height: 100
         width: 100
-        onValueChanged: screenHandler.setMotorhiz( value )
+        onPressedChanged: screenHandler.setMotorhiz( value )
         background: Rectangle {
             x: motorKontrolDial.width / 2 - width / 2
             y: motorKontrolDial.height / 2 - height / 2
@@ -36,7 +36,7 @@ Rectangle {
         }
         Text {
             anchors.centerIn: parent
-            text: "% " + screenHandler.motorhiz.toFixed(1)
+            text: "% " + (motorKontrolDial.value * 100 / 4095).toFixed(1)
             font.pointSize: 12
             color: "black"
         }

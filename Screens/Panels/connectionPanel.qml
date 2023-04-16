@@ -354,7 +354,8 @@ Rectangle {
                     screenHandler.setUart2_port( "-" )
                     success= false
                 }
-                screenHandler.setScreen( 2 )
+//                screenHandler.setScreen( 2 )
+                screenHandler.baglanButon()
             }
         }
 

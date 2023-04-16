@@ -152,6 +152,14 @@ Item {
         MouseArea {
             id: motorhizButon
             anchors.fill: parent
+            onClicked: screenHandler.setMotortakipscreen( !screenHandler.motortakipscreen )
+        }
+        Loader {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            source:"motortakip.qml"
+            visible: screenHandler.motortakipscreen
         }
     }
 }

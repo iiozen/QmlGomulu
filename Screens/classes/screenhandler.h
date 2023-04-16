@@ -3,6 +3,10 @@
 
 
 #include <QObject>
+#include "degiskenler.h"
+#include "uartconnection.h"
+
+#include <QDebug>
 
 class ScreenHandler : public QObject
 {
@@ -25,7 +29,7 @@ class ScreenHandler : public QObject
     Q_PROPERTY(bool led14 READ led14 WRITE setLed14 NOTIFY led14Changed)
     Q_PROPERTY(bool led15 READ led15 WRITE setLed15 NOTIFY led15Changed)
     Q_PROPERTY(int leddelay READ leddelay WRITE setLeddelay NOTIFY leddelayChanged)
-    Q_PROPERTY(float motorhiz READ motorhiz WRITE setMotorhiz NOTIFY motorhizChanged)
+    Q_PROPERTY(int motorhiz READ motorhiz WRITE setMotorhiz NOTIFY motorhizChanged)
     Q_PROPERTY(float tempval READ tempval WRITE setTempval NOTIFY tempvalChanged)
     Q_PROPERTY(bool tempscreen READ tempscreen WRITE setTempscreen NOTIFY tempscreenChanged)
     Q_PROPERTY(bool motorscreen READ motorscreen WRITE setMotorscreen NOTIFY motorscreenChanged)
@@ -35,6 +39,9 @@ class ScreenHandler : public QObject
     Q_PROPERTY(QString uart2_port READ uart2_port WRITE setUart2_port NOTIFY uart2_portChanged)
     Q_PROPERTY(int uart2_baudrate READ uart2_baudrate WRITE setUart2_baudrate NOTIFY uart2_baudrateChanged)
     Q_PROPERTY(int uart2_timeout READ uart2_timeout WRITE setUart2_timeout NOTIFY uart2_timeoutChanged)
+    Q_PROPERTY(bool hepsiButon READ hepsiButon WRITE setHepsiButon NOTIFY hepsiButonChanged)
+    Q_PROPERTY(bool siraliButon READ siraliButon WRITE setSiraliButon NOTIFY siraliButonChanged)
+    Q_PROPERTY(bool motortakipscreen READ motortakipscreen WRITE setMotortakipscreen NOTIFY motortakipscreenChanged)
 public:
     explicit ScreenHandler(QObject *parent = nullptr);
     int screen() const;
@@ -55,7 +62,7 @@ public:
     bool led14() const;
     bool led15() const;
     int leddelay() const;
-    float motorhiz() const;
+    int motorhiz() const;
     float tempval() const;
     bool tempscreen() const;
     bool motorscreen() const;
@@ -65,6 +72,9 @@ public:
     QString uart2_port() const;
     int uart2_baudrate() const;
     int uart2_timeout() const;
+    bool hepsiButon() const;
+    bool siraliButon() const;
+    bool motortakipscreen() const;
 public slots:
     void resetAll();
     void setScreen(int newScreen);
@@ -84,9 +94,8 @@ public slots:
     void setLed13(bool newLed13);
     void setLed14(bool newLed14);
     void setLed15(bool newLed15);
-    void hepsiToggle();
     void setLeddelay(int newLeddelay);
-    void setMotorhiz(float newMotorhiz);
+    void setMotorhiz(int newMotorhiz);
     void setTempval(float newTempval);
     void setTempscreen(bool newTempscreen);
     void setMotorscreen(bool newMotorscreen);
@@ -96,6 +105,10 @@ public slots:
     void setUart1_timeout(int newUart1_timeout);
     void setUart2_baudrate(int newUart2_baudrate);
     void setUart2_timeout(int newUart2_timeout);
+    void baglanButon();
+    void setHepsiButon(bool newHepsiButon);
+    void setSiraliButon(bool newSiraliButon);
+    void setMotortakipscreen(bool newMotortakipscreen);
 signals:
     void screenChanged();
     void led0Changed();
@@ -125,6 +138,10 @@ signals:
     void uart2_portChanged();
     void uart2_baudrateChanged();
     void uart2_timeoutChanged();
+    void hepsiButonChanged();
+    void siraliButonChanged();
+
+    void motortakipscreenChanged();
 
 private:
     int m_screen;
@@ -145,7 +162,7 @@ private:
     bool m_led14;
     bool m_led15;
     int m_leddelay;
-    float m_motorhiz;
+    int m_motorhiz;
     float m_tempval;
     bool m_tempscreen;
     bool m_motorscreen;
@@ -155,6 +172,11 @@ private:
     QString m_uart2_port;
     int m_uart2_baudrate;
     int m_uart2_timeout;
+    UartConnection* uart1;
+    UartConnection* uart2;
+    bool m_hepsiButon;
+    bool m_siraliButon;
+    bool m_motortakipscreen;
 };
 
 #endif // SCREENHANDLER_H

@@ -240,20 +240,20 @@ Rectangle {
         anchors.leftMargin: 466
         width: 72
         height: 144
-        color: "#545454"
+        color: screenHandler.hepsiButon ? "#ff3131": "white"
         radius: 5
-        border.color: "white"
+        border.color: screenHandler.hepsiButon ? "white" : "#ff3131"
         border.width: 0
         Text {
             anchors.centerIn: parent
             font.pointSize: 12
-            color: "white"
+            color: screenHandler.hepsiButon ? "white" : "#ff3131"
             text: "<b>HEPSİ</b>"
         }
         MouseArea {
             id: hepsiToggleButtonMouse
             anchors.fill: parent
-            onClicked: screenHandler.hepsiToggle()
+            onClicked: screenHandler.setHepsiButon( !screenHandler.hepsiButon )
             hoverEnabled: true
             onEntered: hepsiToggleButton.border.width= 2
             onExited: hepsiToggleButton.border.width= 0
@@ -265,25 +265,25 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 214.1
         anchors.leftMargin: 54.4
-        color: "#ff3131"
+        color: screenHandler.siraliButon ? "#ff3131":  "white"
         width: 109
         height: 48
         radius: 5
         border.width: 0
-        border.color: "white"
+        border.color: screenHandler.siraliButon ? "white" : "#ff3131"
         Text {
             id: siraliButonText
             font.pointSize: 12
             anchors.centerIn: parent
             text: "<b>SIRALI</b>"
-            color: "white"
+            color: screenHandler.siraliButon ? "white" : "#ff3131"
         }
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
             onEntered: siraliButon.border.width= 2
             onExited: siraliButon.border.width= 0
-
+            onClicked: screenHandler.setSiraliButon( !screenHandler.siraliButon )
         }
     }
     Rectangle {
@@ -301,9 +301,9 @@ Rectangle {
             from: 100
             to: 2000
             value: screenHandler.leddelay
-            onValueChanged: screenHandler.setLeddelay( value )
             stepSize: 10
-            width: 255.4            
+            width: 255.4
+            onPressedChanged: if( !pressed )  screenHandler.setLeddelay( value )
             handle: Rectangle {
                 x: ledSiraliSlider.leftPadding + ledSiraliSlider.visualPosition * (ledSiraliSlider.availableWidth -width)
                 y: ledSiraliSlider.topPadding + ledSiraliSlider.availableHeight /2 - height / 2
@@ -312,14 +312,14 @@ Rectangle {
                 radius: width * 0.5
                 color: ledSiraliSlider.pressed ? "#f0f0f0" : "#f6f6f6"
                 border.color: "#737373"
-                border.width: 3                
+                border.width: 3
             }
         }
         Text {
             id: ledSiraliText
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
-            text: screenHandler.leddelay + " ms"
+            text: ledSiraliSlider.value + " ms"
             font.bold: true
             font.pointSize: 12
             color: "white"
