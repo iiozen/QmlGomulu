@@ -369,7 +369,7 @@ Rectangle {
         width: 95
         height: 95
         visible: screenHandler.screen === 1
-        running: false
+//        running: false
     }
 
 

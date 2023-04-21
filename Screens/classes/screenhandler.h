@@ -5,6 +5,8 @@
 #include <QObject>
 #include "degiskenler.h"
 #include "uartconnection.h"
+#include <QSharedPointer>
+#include <QThread>
 
 #include <QDebug>
 
@@ -42,6 +44,7 @@ class ScreenHandler : public QObject
     Q_PROPERTY(bool hepsiButon READ hepsiButon WRITE setHepsiButon NOTIFY hepsiButonChanged)
     Q_PROPERTY(bool siraliButon READ siraliButon WRITE setSiraliButon NOTIFY siraliButonChanged)
     Q_PROPERTY(bool motortakipscreen READ motortakipscreen WRITE setMotortakipscreen NOTIFY motortakipscreenChanged)
+    Q_PROPERTY(float motorunhizi READ motorunhizi WRITE setMotorunhizi NOTIFY motorunhiziChanged)
 public:
     explicit ScreenHandler(QObject *parent = nullptr);
     int screen() const;
@@ -75,6 +78,18 @@ public:
     bool hepsiButon() const;
     bool siraliButon() const;
     bool motortakipscreen() const;
+    enum OkumaTipleri{
+            BAGLAN,
+            LED,
+            MOTORSUR,
+            TEMPAC,
+            GRAPHAC,
+            TEMPOKU,
+            GRAPHOKU,
+    };
+    float motorunhizi() const;
+
+
 public slots:
     void resetAll();
     void setScreen(int newScreen);
@@ -109,6 +124,17 @@ public slots:
     void setHepsiButon(bool newHepsiButon);
     void setSiraliButon(bool newSiraliButon);
     void setMotortakipscreen(bool newMotortakipscreen);
+    void veriOkuBAGLAN(UartConnection* uart,QSharedPointer<std::string> veri);
+    void veriOkuLED(UartConnection* uart,QSharedPointer<std::string> veri);
+    void veriOkuMOTORSUR(UartConnection* uart,QSharedPointer<std::string> veri);    
+    void veriOkuTEMPAC(UartConnection* uart,QSharedPointer<std::string> veri);
+    void veriOkuGRAPHAC(UartConnection* uart,QSharedPointer<std::string> veri);
+    void veriOkuTEMPOKU(UartConnection* uart,QSharedPointer<std::string> veri);
+    void veriOkuGRAPHOKU(UartConnection* uart,QSharedPointer<std::string> veri);
+    void Yikildi();
+    void setMotorunhizi(float newMotorunhizi);
+    void threadsDeleting();
+    void baglantiyiKes();
 signals:
     void screenChanged();
     void led0Changed();
@@ -140,9 +166,12 @@ signals:
     void uart2_timeoutChanged();
     void hepsiButonChanged();
     void siraliButonChanged();
-
     void motortakipscreenChanged();
-
+    void veriokumaBitti();
+    void veriokumaBitti2();
+    void motorunhiziChanged();
+    void threadleriSil();
+    void uartlarisil();
 private:
     int m_screen;
     bool m_led0;
@@ -177,6 +206,13 @@ private:
     bool m_hepsiButon;
     bool m_siraliButon;
     bool m_motortakipscreen;
+    void uartveriOku(UartConnection* uart,OkumaTipleri tip);
+    QThread* thread1;
+    QThread* thread2;
+    int baglanadet= 0;
+    std::string komut;
+    float m_motorunhizi;
+    int m_threadsdeleted;
 };
 
 #endif // SCREENHANDLER_H

@@ -33,7 +33,8 @@ Rectangle {
         anchors.bottomMargin: 5
         MouseArea {
             anchors.fill: parent
-            onClicked: screenHandler.resetAll()
+//            onClicked: screenHandler.resetAll()
+            onClicked: screenHandler.baglantiyiKes()
         }
     }
     Image {

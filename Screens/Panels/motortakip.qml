@@ -16,10 +16,16 @@ Rectangle {
 
     Rectangle {
         anchors.centerIn: parent
-        color: "black"
+        color: Qt.rgba(0,0,0,0)
         height: parent.height * 0.75
         width: parent.width * 0.75
-
+        Text {
+            anchors.centerIn: parent
+            text: screenHandler.motorunhizi.toFixed(2)
+            font.pointSize: 12
+            color: "white"
+            font.bold: true
+        }
     }
 
 }
