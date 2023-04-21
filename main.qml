@@ -6,7 +6,7 @@ Window {
     width: 812
     height: 375
     visible: true
-    title: qsTr("Gomulu Proje")
+    title: qsTr("Stm32 Surme")
     ScreenHandler {
         id: screenHandler
     }

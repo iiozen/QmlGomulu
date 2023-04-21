@@ -546,13 +546,10 @@ void ScreenHandler::baglanButon()
     connect(thread1,&QThread::started,uart1,&UartConnection::veriOku);
     connect(thread2,&QThread::started,uart2,&UartConnection::veriOku);
 
-    connect(this,&ScreenHandler::uartlarisil,thread1,&QThread::quit);
-    connect(this,&ScreenHandler::uartlarisil,thread2,&QThread::quit);
 
     connect(this,&ScreenHandler::uartlarisil,this,&ScreenHandler::threadsDeleting);
 
     connect(this,&ScreenHandler::threadleriSil,this,&ScreenHandler::resetAll);
-
 
     connect(thread1,&QThread::finished,this,&ScreenHandler::threadsDeleting);
     connect(thread2,&QThread::finished,this,&ScreenHandler::threadsDeleting);
@@ -562,10 +559,17 @@ void ScreenHandler::baglanButon()
     connect(thread2,&QThread::destroyed,this,&ScreenHandler::Yikildi);
 
     uartveriOku(uart1,BAGLAN);
+    connect(uart2,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU,Qt::QueuedConnection);
+    connect(uart2,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU,Qt::QueuedConnection);
+
+
     connect(this,&ScreenHandler::veriokumaBitti,thread1,&QThread::quit);
     connect(this,&ScreenHandler::veriokumaBitti2,thread2,&QThread::quit);
-    thread2->start();
-    emit veriokumaBitti2();
+
+//    thread2->start();
+//    thread2->quit();
+
+//    emit veriokumaBitti2();
 }
 
 bool ScreenHandler::hepsiButon() const
@@ -657,7 +661,6 @@ void ScreenHandler::setMotortakipscreen(bool newMotortakipscreen)
     uartveriOku(uart1,GRAPHAC);
     if ( m_motortakipscreen )
         uartveriOku(uart2,GRAPHOKU);
-
     emit motortakipscreenChanged();
 }
 
@@ -677,7 +680,6 @@ void ScreenHandler::veriOkuBAGLAN(UartConnection* uart,QSharedPointer<std::strin
         else {
             baglanadet= 0;
             setScreen( 0 );
-//            resetAll();
             baglantiyiKes();
             emit veriokumaBitti();
 
@@ -793,7 +795,6 @@ void ScreenHandler::veriOkuTEMPOKU(UartConnection* uart,QSharedPointer<std::stri
             }
         }
     }
-    disconnect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU);
     if( m_tempscreen ) {
         uartveriOku(uart,TEMPOKU);
     }
@@ -804,7 +805,7 @@ void ScreenHandler::veriOkuTEMPOKU(UartConnection* uart,QSharedPointer<std::stri
 
 void ScreenHandler::veriOkuGRAPHOKU(UartConnection* uart,QSharedPointer<std::string> veri)
 {
-    disconnect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU);
+
     QSharedPointer<std::string> motorhiz(new std::string);
     int verilen = veri->length();
     for (int i = 0; i<verilen;i++) {
@@ -825,11 +826,11 @@ void ScreenHandler::veriOkuGRAPHOKU(UartConnection* uart,QSharedPointer<std::str
             }
         }
     }
-
     if( m_motortakipscreen ) {
         uartveriOku(uart,GRAPHOKU);
     }
     else {
+
         emit veriokumaBitti2();
     }
 }
@@ -896,19 +897,25 @@ void ScreenHandler::uartveriOku(UartConnection *uart,OkumaTipleri tip)
         }
     }
     else if(tip == TEMPOKU) {
-        connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU,Qt::QueuedConnection);
+//        connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU,Qt::QueuedConnection);
+//        if (m_tempscreen)
+//            connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU,Qt::QueuedConnection);
         if ( !thread2->isRunning()) {
             qInfo() << "tempoku thread2 isrunning:"<<thread2->isRunning();
             thread2->start();
+            uart->veriOkumaRun();
         }
         else
             uart->veriOkumaRun();
     }
     else if(tip == GRAPHOKU) {        
-        connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU,Qt::QueuedConnection);
+//        connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU,Qt::QueuedConnection);
+//        if (m_motortakipscreen)
+//            connect(uart,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU,Qt::QueuedConnection);
         if ( !thread2->isRunning()) {
             qInfo() << "thread2 graph isrunning:"<<thread2->isRunning();
             thread2->start();
+            uart->veriOkumaRun();
         }
         else
             uart->veriOkumaRun();
@@ -946,7 +953,14 @@ void ScreenHandler::baglantiyiKes()
 {
     qInfo() << "baglantiyikes";
     m_tempscreen= false;
+
+    emit tempscreenChanged();
     m_motortakipscreen= false;
+    emit motortakipscreenChanged();
+    uartveriOku(uart2,TEMPOKU);
+    uartveriOku(uart2,GRAPHOKU);
+    disconnect(uart2,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuTEMPOKU);
+    disconnect(uart2,&UartConnection::veriOkundu,this,&ScreenHandler::veriOkuGRAPHOKU);
     if (uart1 != NULL ){
         delete uart1;
         uart1 = NULL;
@@ -957,6 +971,11 @@ void ScreenHandler::baglantiyiKes()
         uart2 = NULL;
         qInfo() <<"uart2 deletelater";
     }
+    thread1->quit();
+    thread2->quit();
+
+    while (!thread1->isFinished() || !thread2->isFinished() ) {}
     emit uartlarisil();
 }
+
 
