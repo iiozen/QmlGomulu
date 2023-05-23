@@ -45,6 +45,8 @@ class ScreenHandler : public QObject
     Q_PROPERTY(bool siraliButon READ siraliButon WRITE setSiraliButon NOTIFY siraliButonChanged)
     Q_PROPERTY(bool motortakipscreen READ motortakipscreen WRITE setMotortakipscreen NOTIFY motortakipscreenChanged)
     Q_PROPERTY(float motorunhizi READ motorunhizi WRITE setMotorunhizi NOTIFY motorunhiziChanged)
+    Q_PROPERTY(QList<float> motorhizverileri READ motorhizverileri WRITE setMotorhizverileri NOTIFY motorhizverileriChanged)
+    Q_PROPERTY(int xadet READ xadet WRITE setXadet NOTIFY xadetChanged)
 public:
     explicit ScreenHandler(QObject *parent = nullptr);
     int screen() const;
@@ -90,6 +92,8 @@ public:
     float motorunhizi() const;
 
 
+    QList<float> motorhizverileri() const;
+    int xadet() const;
 public slots:
     void resetAll();
     void setScreen(int newScreen);
@@ -135,6 +139,9 @@ public slots:
     void setMotorunhizi(float newMotorunhizi);
     void threadsDeleting();
     void baglantiyiKes();
+    void setMotorhizverileri(const QList<float> &newMotorhizverileri);
+    void setMotorhizverilerini(const float &newMotorhizverilerini);
+    void setXadet(int newXadet);
 signals:
     void screenChanged();
     void led0Changed();
@@ -172,6 +179,10 @@ signals:
     void motorunhiziChanged();
     void threadleriSil();
     void uartlarisil();
+    void motorhizverileriChanged();
+
+    void xadetChanged();
+
 private:
     int m_screen;
     bool m_led0;
@@ -213,6 +224,8 @@ private:
     std::string komut;
     float m_motorunhizi;
     int m_threadsdeleted;
+    QList<float> m_motorhizverileri;
+    int m_xadet;
 };
 
 #endif // SCREENHANDLER_H

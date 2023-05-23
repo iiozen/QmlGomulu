@@ -21,6 +21,7 @@ ScreenHandler::ScreenHandler(QObject *parent)
     , m_hepsiButon ( false )
     , m_siraliButon ( false )
     , m_motortakipscreen( false )
+    , m_xadet ( 10 )
 {
 
 }
@@ -307,6 +308,7 @@ void ScreenHandler::resetAll()
 {
 
     setScreen(0);
+    m_motorhizverileri.clear();
     m_hepsiButon = false;
     m_led0 = m_hepsiButon;
     emit led0Changed();
@@ -565,11 +567,6 @@ void ScreenHandler::baglanButon()
 
     connect(this,&ScreenHandler::veriokumaBitti,thread1,&QThread::quit);
     connect(this,&ScreenHandler::veriokumaBitti2,thread2,&QThread::quit);
-
-//    thread2->start();
-//    thread2->quit();
-
-//    emit veriokumaBitti2();
 }
 
 bool ScreenHandler::hepsiButon() const
@@ -579,8 +576,6 @@ bool ScreenHandler::hepsiButon() const
 
 void ScreenHandler::setHepsiButon(bool newHepsiButon)
 {
-//    if (m_hepsiButon == newHepsiButon)
-//        return;
     m_hepsiButon = newHepsiButon;
     std::string veri;    
     if ( m_hepsiButon ) veri = LED_YAK HEPSI;
@@ -820,7 +815,8 @@ void ScreenHandler::veriOkuGRAPHOKU(UartConnection* uart,QSharedPointer<std::str
                 }
                 for ( int j = i;j<i+4 && j < verilen ;j++) *motorhiz += veri->data()[j];
                 if (motorhiz->length() > 4 ) {
-                    setMotorunhizi(std::stof(motorhiz->data()));
+//                    setMotorunhizi(std::stof(motorhiz->data()));
+                    setMotorhizverilerini(std::stof(motorhiz->data()));
                     break;
                 }
             }
@@ -978,4 +974,38 @@ void ScreenHandler::baglantiyiKes()
     emit uartlarisil();
 }
 
+void ScreenHandler::setMotorhizverilerini(const float &newMotorhizverilerini)
+{
+        if(m_motorhizverileri.length()<m_xadet) {
+            m_motorhizverileri.append(newMotorhizverilerini);
+        }
+        else {
+            m_motorhizverileri.removeFirst();
+            m_motorhizverileri.append(newMotorhizverilerini);
+        }
+        emit motorhizverileriChanged();
+}
 
+
+
+QList<float> ScreenHandler::motorhizverileri() const
+{
+    return m_motorhizverileri;
+}
+
+void ScreenHandler::setMotorhizverileri(const QList<float> &newMotorhizverileri)
+{
+}
+
+int ScreenHandler::xadet() const
+{
+    return m_xadet;
+}
+
+void ScreenHandler::setXadet(int newXadet)
+{
+    if (m_xadet == newXadet)
+        return;
+    m_xadet = newXadet;
+    emit xadetChanged();
+}
