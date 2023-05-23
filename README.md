@@ -13,6 +13,3 @@
 #### SICAKLIK VE MOTOR HIZ TAKİBİ
 ![](https://github.com/iiozen/QmlGomulu/blob/master/gifler/sicaklikvemotor.gif)
 
-
-#### HEPSİNİN BİR ARADA KULLANIMI 
-![](https://github.com/iiozen/QmlGomulu/blob/master/gifler/hepsi.gif)
